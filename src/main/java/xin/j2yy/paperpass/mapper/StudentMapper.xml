@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.j2yy.paperpass.dao.StudentDao" >
+
+  <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Student" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="college" property="college" jdbcType="VARCHAR" />
+    <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <association property="user" column="uid" select="xin.j2yy.paperpass.dao.UserDao.selectByPrimaryKey" />
+    <association property="paper" column="pid" select="xin.j2yy.paperpass.dao.PaperDao.selectByPrimaryKey" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Student" >
+    insert into student (sid, uid, pid, 
+      name, gender, college, 
+      specialty, classname, phone, 
+      email)
+    values (#{sid,jdbcType=INTEGER}, #{user.uid,jdbcType=INTEGER}, #{paper.pid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{college,jdbcType=VARCHAR}, 
+      #{specialty,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Student" >
+    update student
+    set uid = #{user.uid,jdbcType=INTEGER},
+      pid = #{paper.pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      college = #{college,jdbcType=VARCHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      classname = #{classname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select sid, uid, pid, name, gender, college, specialty, classname, phone, email
+    from student
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select sid, uid, pid, name, gender, college, specialty, classname, phone, email
+    from student where 1=1
+  </select>
+  
+</mapper>

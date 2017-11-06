@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.j2yy.paperpass.dao.RoleDao" >
+  
+  <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Role" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
+    <collection property="authorities" column="rid" select="xin.j2yy.paperpass.dao.RoleAuthorityDao.selectByRoleId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Role" >
+    insert into role (rid, rolename)
+    values (#{rid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Role" >
+    update role
+    set rolename = #{rolename,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select rid, rolename
+    from role
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select rid, rolename
+    from role where 1=1
+  </select>
+</mapper>

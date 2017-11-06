@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.j2yy.paperpass.dao.TeacherDao" >
+  
+  <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Teacher" >
+    <id column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="post" property="post" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <association property="user" column="uid" select="xin.j2yy.paperpass.dao.UserDao.selectByPrimaryKey" />
+    <collection property="papers" column="tid" select="xin.j2yy.paperpass.dao.PaperDao.selectByTeacherId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Teacher" >
+    insert into teacher (tid, uid, name, 
+      gender, post, phone, email
+      )
+    values (#{tid,jdbcType=INTEGER}, #{user.uid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{post,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Teacher" >
+    update teacher
+    set uid = #{user.uid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      post = #{post,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select tid, uid, name, gender, post, phone, email
+    from teacher
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select tid, uid, name, gender, post, phone, email
+    from teacher
+  </select>
+</mapper>

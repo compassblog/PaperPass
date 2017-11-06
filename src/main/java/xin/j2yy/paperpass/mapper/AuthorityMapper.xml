@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.j2yy.paperpass.dao.AuthorityDao" >
+  
+  <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Authority" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <collection property="roles" column="aid" select="xin.j2yy.paperpass.dao.RoleAuthorityDao.selectByAuthorityId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from authority
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Authority" >
+    insert into authority (aid, url)
+    values (#{aid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Authority" >
+    update authority
+    set url = #{url,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select aid, url
+    from authority
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select aid, url
+    from authority where 1=1
+  </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="DB2Tables" targetRuntime="MyBatis3Simple">
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/paperpass"
+        userId="root"
+        password="123">
+    </jdbcConnection>
+    
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	<!-- 指定javaBean的生成策略 -->
+    <javaModelGenerator targetPackage="xin.j2yy.paperpass.entity" targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    
+	<!-- mapper.xml生成策略 -->
+    <sqlMapGenerator targetPackage="xin.j2yy.paperpass.mapper"  targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+	
+	<!-- dao生成接口策略 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="xin.j2yy.paperpass.dao"  targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="authority" domainObjectName="Authority" ></table>
+    <table tableName="paper" domainObjectName="Paper"></table>
+    <table tableName="role" domainObjectName="Role"></table>
+    <table tableName="student" domainObjectName="Student"></table>
+    <table tableName="teacher" domainObjectName="Teacher"></table>
+    <table tableName="user" domainObjectName="User" ></table>
+    <table tableName="role_authority" domainObjectName="RoleAuthority" ></table>
+  </context>
+</generatorConfiguration>

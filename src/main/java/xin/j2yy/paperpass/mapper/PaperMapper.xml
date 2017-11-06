@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xin.j2yy.paperpass.dao.PaperDao" >
+
+  <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Paper" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="technique" property="technique" jdbcType="VARCHAR" />
+    <result column="synopsis" property="synopsis" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="updatetime" property="updatetime" jdbcType="DATE" />
+    <association property="teacher" column="tid" select="xin.j2yy.paperpass.dao.TeacherDao.selectByPrimaryKey" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from paper
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Paper" >
+    insert into paper (pid, tid, title, 
+      type, technique, synopsis, 
+      number, status, updatetime
+      )
+    values (#{pid,jdbcType=INTEGER}, #{teacher.tid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{technique,jdbcType=VARCHAR}, #{synopsis,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updatetime,jdbcType=DATE}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Paper" >
+    update paper
+    set tid = #{teacher.tid,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      technique = #{technique,jdbcType=VARCHAR},
+      synopsis = #{synopsis,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=DATE}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select pid, tid, title, type, technique, synopsis, number, status, updatetime
+    from paper
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select pid, tid, title, type, technique, synopsis, number, status, updatetime
+    from paper where 1=1
+  </select>
+  
+  <select id="selectByTeacherId" resultMap="BaseResultMap">
+  	select pid, tid, title, type, technique, synopsis, number, status, updatetime
+    from paper where tid = #{tid}
+  </select>
+</mapper>
