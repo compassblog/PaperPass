@@ -5,6 +5,7 @@
   <resultMap id="BaseResultMap" type="xin.j2yy.paperpass.entity.Authority" >
     <id column="aid" property="aid" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
     <collection property="roles" column="aid" select="xin.j2yy.paperpass.dao.RoleAuthorityDao.selectByAuthorityId" />
   </resultMap>
   
@@ -14,24 +15,25 @@
   </delete>
   
   <insert id="insert" parameterType="xin.j2yy.paperpass.entity.Authority" >
-    insert into authority (aid, url)
-    values (#{aid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+    insert into authority (aid, url,description)
+    values (#{aid,jdbcType=INTEGER},#{url,jdbcType=VARCHAR},#{description})
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Authority" >
     update authority
-    set url = #{url,jdbcType=VARCHAR}
+    set url = #{url,jdbcType=VARCHAR},
+    description = #{description,jdbcType=VARCHAR}
     where aid = #{aid,jdbcType=INTEGER}
   </update>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select aid, url
+    select aid, url,description
     from authority
     where aid = #{aid,jdbcType=INTEGER}
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap" >
-    select aid, url
+    select aid, url,description
     from authority where 1=1
   </select>
 </mapper>

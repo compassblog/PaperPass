@@ -31,16 +31,16 @@
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="xin.j2yy.paperpass.entity.Paper" >
-    update paper
-    set tid = #{teacher.tid,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      technique = #{technique,jdbcType=VARCHAR},
-      synopsis = #{synopsis,jdbcType=VARCHAR},
-      number = #{number,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      updatetime = #{updatetime,jdbcType=DATE}
-    where pid = #{pid,jdbcType=INTEGER}
+	update paper
+	set tid = #{teacher.tid,jdbcType=INTEGER},
+	title = #{title,jdbcType=VARCHAR},
+	type = #{type,jdbcType=VARCHAR},
+	technique = #{technique,jdbcType=VARCHAR},
+	synopsis = #{synopsis,jdbcType=VARCHAR},
+	number = #{number,jdbcType=INTEGER},
+	status = #{status,jdbcType=INTEGER},
+	updatetime = #{updatetime,jdbcType=DATE}
+	where pid = #{pid,jdbcType=INTEGER}
   </update>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

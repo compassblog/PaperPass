@@ -7,8 +7,18 @@ public class Authority {
     private Integer aid;
     //权限url
     private String url;
+    //权限描述
+    private String description;
     //该权限下所对应的所有角色
     private List<Role> roles;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public List<Role> getRoles() {
 		return roles;
